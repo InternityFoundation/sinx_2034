@@ -4,10 +4,13 @@ Usage-
 
 Start APIs-
 
-cd Backend
+```cd Backend/
 python data.py
+```
 
 Start Frontend-
-cd Frontend/hackcovid
+
+```cd Frontend/hackcovid/
 npm install
 npm start
+```
