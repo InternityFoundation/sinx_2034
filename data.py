@@ -1,5 +1,8 @@
 import pandas as pd
 import flask
+import json
+from flask import jsonify # <- `jsonify` instead of `json`
+
 
 def get_data():
     population=pd.read_csv("input_file_v1_dashboard.csv")
@@ -17,7 +20,7 @@ def get_data():
     merged_data["probability"]=merged_data.apply(lambda x: probability_area(x["Number of Cases- Standalone Structure"],x["Number of Cases- Medium Congested"],x["Number of Cases- Very Congested Area"],x["Population"]),axis=1)
 
     final_data=merged_data[merged_data["Date Entered"]=="11th April or Earlier"][["Ward","probability","Population"]][1:]
-
+    return json.loads(final_data.to_json(orient='records'))
 
 app = flask.Flask(__name__)
 app.config["DEBUG"] = True
@@ -25,6 +28,6 @@ app.config["DEBUG"] = True
 
 @app.route('/', methods=['GET'])
 def home():
-    return flask.jsonify(get_data())
+    return jsonify(get_data())
 
 app.run(host="0.0.0.0",port="1234")
